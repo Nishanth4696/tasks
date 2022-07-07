@@ -58,20 +58,24 @@ function User(){
 
   return(
 <div className="App">
-       <form  onSubmit={formik.handleSubmit} className='add-movie-form'>
+
+  
+       <form  onSubmit={formik.handleSubmit} className='form'>
+       <h1 style={{fontSize:'42px'}}> <span style={{color:'red'}}>Dhvani</span> Analytic Intelligence Pvt Ltd</h1>
           <TextField
+            
             id="id"
             name="id"
             value={formik.values.id}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            label='Enter the id'
-            variant="standard" 
+            label='Enter the Emp_Id'
+            className="textfield"
             error={formik.errors.id && formik.touched.id}
             helperText={formik.errors.id && formik.touched.id && formik.errors.id}/>
      
 
-     <Button variant="outlined" type='submit'>Search</Button>
+     <Button variant="contained" className='button ' type='submit'>Search</Button>
       </form>
       
       
@@ -86,20 +90,31 @@ function User(){
 
 function Userdetails(){
   const { id } = useParams();
+  const navigate=useNavigate();
   const [user, setUser] = useState();
 
   useEffect(() => {
     fetch(`http://localhost:9000/users/${id}`,{method:"GET"})
     .then((data) => data.json())
     .then((mv) => setUser(mv))
+    .then(()=>setTimeout(()=> navigate("/"),7000))
   },[id])
 
   console.log(user)
   return (
     <div>
-      {user?<div><h1>EMP_ID: {user.id}</h1>
-    <h1>Name: {user.name}</h1>
-    </div>: <div><h1>No user found</h1>
+      {user ?
+      <div className='container'>
+        <h1>Emp_Id: {user.id}</h1>
+        <h1>Name: {user.name}</h1>
+        <h1>Age: {user.age}</h1>
+        <h1>Email: {user.email}</h1>
+        <h1>Phone Number: {user.phn_no}</h1>
+        <h1>Address: {user.address}</h1>
+       
+      </div> : 
+    <div>
+      <h1>No user found</h1>
     </div>}
       
       
